@@ -14,6 +14,9 @@ import com.ftc.flightcontrol.security.entitys.RegisterRequest;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Controlador con los endpoinds para el registro y el login seguro
+ */
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor

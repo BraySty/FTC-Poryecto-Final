@@ -24,32 +24,32 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin(origins = {"http://localhost:4200"})
 public class UsuarioController {
 
-    private final UsuarioService usuarioService;
+    private final UsuarioService service;
 
     @PostMapping("/users") 
 	ResponseEntity<Mensaje> create(@RequestBody Usuario usuario) {
-		return usuarioService.save(usuario);
+		return service.save(usuario);
 	}
 	
 	@PreAuthorize("hasAuthority('Cliente')")
 	@GetMapping("/users") 
 	ResponseEntity<?> read() {
-		return usuarioService.read();
+		return service.read();
 	}
 
     @GetMapping("/users/{correo}") 
 	ResponseEntity<?> read(@PathVariable("correo") String correoUsuario) {
-		return usuarioService.read(correoUsuario);
+		return service.read(correoUsuario);
 	}
 
     @PutMapping("/users/{correo}/{password}") 
 	ResponseEntity<Mensaje> update(@PathVariable("correo") String correoUsuario, @PathVariable("password") String passwordUsuario, @RequestBody Usuario usuario) {
-		return usuarioService.update(correoUsuario, passwordUsuario, usuario);
+		return service.update(correoUsuario, passwordUsuario, usuario);
 	}
 
     @DeleteMapping("/users/{correo}") 
 	ResponseEntity<Mensaje> delete(@PathVariable("correo") String correoUsuario) {
-        return usuarioService.delete(correoUsuario);
+        return service.delete(correoUsuario);
 	}
 
 }

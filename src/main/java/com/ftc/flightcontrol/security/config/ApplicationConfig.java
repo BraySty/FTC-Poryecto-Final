@@ -22,14 +22,12 @@ public class ApplicationConfig {
     private final UsuarioRepository repo;
 
     @Bean
-    AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception
-    {
+    AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
     @Bean
-    AuthenticationProvider authenticationProvider()
-    {
+    AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider= new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());

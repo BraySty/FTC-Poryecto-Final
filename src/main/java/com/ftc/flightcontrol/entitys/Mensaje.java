@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Esta clase se encarga de contener String con mensajes para ser enviados por HTTP.
+ */
 @Data
 @Builder
 @AllArgsConstructor

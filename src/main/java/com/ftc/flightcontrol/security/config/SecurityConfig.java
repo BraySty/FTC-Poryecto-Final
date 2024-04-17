@@ -31,7 +31,7 @@ public class SecurityConfig {
                         "/api/v1/auth/**",
                         "/swagger-ui/**",
                         "/v3/api-docs/**",
-                        "/doc/swagger-ui/**").permitAll().anyRequest().authenticated())
+                        "/doc/swagger-ui/**").permitAll().anyRequest().anonymous())
                 .sessionManagement(
                         sessionManager -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)

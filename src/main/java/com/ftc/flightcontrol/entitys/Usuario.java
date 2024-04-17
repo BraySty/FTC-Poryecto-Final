@@ -8,14 +8,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.ftc.flightcontrol.security.role.Role;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -24,35 +24,33 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Esta clase es la super clase para las demas clases que heredan de esta.
+ */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Usuarios", catalog = "flightcontrol")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name = "Persona", catalog = "flightcontrol")
 public class Usuario implements UserDetails {
 
     @Id
-    @GeneratedValue
     @Column(name = "DNI", length = 255, unique = true)
-    String dni;
+    protected String dni;
     @Column(name = "Nombre", length = 255)
-    String nombre;
+    protected String nombre;
     @Column(name = "Apellido", length = 255)
-    String apellido;
+    protected String apellido;
     @Column(name = "Correo", length = 255, unique = true)
-    String correo;
+    protected String correo;
     @Column(name = "Password", length = 255)
-    String password;
+    protected String password;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "roles_id", referencedColumnName = "id")
     @JsonManagedReference
-    private Role role;
-
-    @Override
-    public String toString() {
-        return "Usuario [DNI = " + dni + "nombre = " + nombre + " " + apellido + ", correo = " + correo + ", contraseña = " + password + "]";
-    }
+    protected Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

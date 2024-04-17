@@ -6,16 +6,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ftc.flightcontrol.entitys.Role;
 import com.ftc.flightcontrol.entitys.Usuario;
 import com.ftc.flightcontrol.repository.UsuarioRepository;
 import com.ftc.flightcontrol.security.service.JwtService;
 import com.ftc.flightcontrol.security.entitys.AuthResponse;
 import com.ftc.flightcontrol.security.entitys.LoginRequest;
 import com.ftc.flightcontrol.security.entitys.RegisterRequest;
-import com.ftc.flightcontrol.security.role.Role;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Clase de Servicios para seguridad usando JWT
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -36,8 +39,10 @@ public class AuthService {
     }
 
     public AuthResponse register(RegisterRequest request) {
-        Usuario user = Usuario.builder()
+        Usuario user = (Usuario) Usuario.builder()
+            .dni("null")
             .nombre(request.getUserName())
+            .apellido("null")
             .correo(request.getCorreo())
             .password(passwordEncoder.encode( request.getPassword()))
             .role(new Role(1, "Cliente", null))

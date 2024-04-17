@@ -69,6 +69,8 @@ build/
 /libpeerconnection.log
 testem.log
 /typings
+logs/
+logs/*
 
 # System files
 .DS_Store
