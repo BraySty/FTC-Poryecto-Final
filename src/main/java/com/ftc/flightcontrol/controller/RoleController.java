@@ -47,8 +47,7 @@ public class RoleController {
     //@PreAuthorize("hasAuthority('Admin')")
     @PutMapping("/roles") 
 	ResponseEntity<Mensaje> update(@RequestBody Role role) {
-		return service.updateById(
-            role);
+		return service.updateById(role);
 	}
 
     //@PreAuthorize("hasAuthority('Admin')")
