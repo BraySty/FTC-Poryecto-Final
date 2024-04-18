@@ -37,4 +37,8 @@ public class Role implements Serializable{
     @JsonBackReference
     private Usuario usuario;
 
+    public Role(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
 }

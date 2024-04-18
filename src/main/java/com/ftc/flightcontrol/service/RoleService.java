@@ -20,8 +20,16 @@ public class RoleService {
 
     @Autowired
     private RoleRepository repo;
+    private String line = "El rol con ID: ";
+    private String noExist = " no existe.";
 
-    public ResponseEntity<Mensaje> saveById(Role role) {
+    /**
+     * Metodo para guardar un Role dentro de la BBDD.
+     * 
+     * @param role El Role a guardar.
+     * @return ResponseEntity<> con el estado de la operacion.
+     */
+    public ResponseEntity<Mensaje> save(Role role) {
         Optional<Role> busqueda = repo.findFirstByDescripcion(role.getDescripcion());
         if (busqueda.isPresent()) {
             return new ResponseEntity<>(new Mensaje("Ya existe este rol."), HttpStatus.CONFLICT);
@@ -32,6 +40,12 @@ public class RoleService {
         }
     }
 
+    /**
+     * Metodo para buscar registros dentro de la BBDD.
+     * 
+     * @return ResponseEntity<> con List<Role> con todos los registros o
+     *         ResponseEntity<> con un Mensaje en caso de estar vacia.
+     */
     public ResponseEntity<?> readAll() {
         List<Role> lista = repo.findAll();
         if (!lista.isEmpty()) {
@@ -41,37 +55,54 @@ public class RoleService {
         }
     }
 
-    public ResponseEntity<?> readById(int idRol) {
-        Optional<Role> busqueda = repo.findById(idRol);
+    /**
+     * Metodo para buscar un registro dentro de la BBDD a travez de su ID.
+     * 
+     * @param id String con el ID a buscar.
+     * @return ResponseEntity<> con el registro en forma de Role o ResponseEntity<>
+     *         con un Mensaje en caso de no existir.
+     */
+    public ResponseEntity<?> readById(int id) {
+        Optional<Role> busqueda = repo.findById(id);
         if (busqueda.isPresent()) {
             return new ResponseEntity<>(busqueda.get(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(new Mensaje("El rol con ID: " + idRol + " no existe."), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new Mensaje(line + id + noExist), HttpStatus.NOT_FOUND);
         }
     }
 
+    /**
+     * Metodo para actualizar un registro dentro de la BBDD a travez de su ID.
+     * 
+     * @param role Role con los datos a actualizar.
+     * @return ResponseEntity<> con el estado de la operacion.
+     */
     public ResponseEntity<Mensaje> updateById(Role role) {
-        int idRol = role.getId();
+        int id = role.getId();
         Optional<Role> update = repo.findById(role.getId());
         if (update.isPresent()) {
             update.get().setDescripcion(role.getDescripcion());
             repo.save(update.get());
-            return new ResponseEntity<>(new Mensaje("Se ha actualizado el rol con ID: " + idRol), HttpStatus.OK);
+            return new ResponseEntity<>(new Mensaje("Se ha actualizado el rol con ID: " + id), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(new Mensaje("El rol con ID: " + idRol + " no existe."),
-                    HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new Mensaje(line + id + noExist), HttpStatus.NOT_FOUND);
         }
     }
 
-    public ResponseEntity<Mensaje> deleteById(int idRol) {
-        Optional<Role> delete = repo.findById(idRol);
-		if (delete.isPresent()) {
-			repo.delete(delete.get());
-			return new ResponseEntity<>(new Mensaje("Se ha borrado el rol con ID: " + idRol),
-					HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(new Mensaje("El rol con ID: " + idRol + " no existe."), HttpStatus.NOT_FOUND);
-		}
+    /**
+     * Metodo para eliminar un registro dentro de la BBDD a travez de su ID.
+     * 
+     * @param id String con el ID a eliminar.
+     * @return ResponseEntity<> con el estado de la operacion.
+     */
+    public ResponseEntity<Mensaje> deleteById(int id) {
+        Optional<Role> delete = repo.findById(id);
+        if (delete.isPresent()) {
+            repo.delete(delete.get());
+            return new ResponseEntity<>(new Mensaje("Se ha borrado el rol con ID: " + id), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(new Mensaje(line + id + noExist), HttpStatus.NOT_FOUND);
+        }
     }
 
 }

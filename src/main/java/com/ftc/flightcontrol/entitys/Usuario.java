@@ -17,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -47,10 +48,12 @@ public class Usuario implements UserDetails {
     protected String correo;
     @Column(name = "Password", length = 255)
     protected String password;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "roles_id", referencedColumnName = "id")
     @JsonManagedReference
     protected Role role;
+    @OneToMany(mappedBy = "usuario")
+    private Collection<VueloPersona> vueloPersona;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -24,28 +24,60 @@ import lombok.RequiredArgsConstructor;
 public class ClaseController {
 
     private final ClaseService service;
+    private static final String BASE_URL = "/clases";
 
-    @PostMapping("/clases")
+    /**
+     * Metodo endpoint POST que recibe datos y los guarda en la BBDD
+     * 
+     * @param clase La clase con los datos que se busca guardar.
+     * @return Mensaje con el estado de la operacion.
+     */
+    @PostMapping(BASE_URL)
     ResponseEntity<Mensaje> create(@RequestBody Clase clase) {
-        return service.saveById(clase);
+        return service.save(clase);
     }
 
-    @GetMapping("/clases")
+    /**
+     * Metodo endpoint GET que lee todos los registro dentro de una tabla
+     * y los envia.
+     * 
+     * @return Se envia una List<> en caso de encontrar registros, sino un
+     *         ResponseEntity<> con el estado de la operacion.
+     */
+    @GetMapping(BASE_URL)
     ResponseEntity<?> readAll() {
         return service.readAll();
     }
 
-    @GetMapping("/clases/{id}")
+    /**
+     * Metodo endpoint GET que regresa un registro especifico de una tabla.
+     * 
+     * @param id String con el ID del registro a buscar.
+     * @return ResponseEntity<> con el estado de la operacion.
+     */
+    @GetMapping(BASE_URL + "/{id}")
     ResponseEntity<?> read(@PathVariable("id") int id) {
         return service.readById(id);
     }
 
-    @PutMapping("/clases")
+    /**
+     * Metodo endpoint PUT que recibe datos y actualiza un registro especifico.
+     * 
+     * @param clase Los datos del registro a actualizar
+     * @return ResponseEntity<> con el estado de la operacion.
+     */
+    @PutMapping(BASE_URL)
     ResponseEntity<Mensaje> update(@RequestBody Clase clase) {
         return service.updateById(clase);
     }
 
-    @DeleteMapping("/clases/{id}")
+    /**
+     * Metodo endpoint PUT que eliminar un registro especifico.
+     * 
+     * @param id String con el ID del registro a eliminar.
+     * @return ResponseEntity<> con el estado de la operacion.
+     */
+    @DeleteMapping(BASE_URL + "/{id}")
     ResponseEntity<Mensaje> delete(@PathVariable("id") int id) {
         return service.deleteById(id);
     }

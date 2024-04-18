@@ -1,6 +1,5 @@
 package com.ftc.flightcontrol.entitys;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 /**
@@ -10,22 +9,5 @@ import jakarta.persistence.Entity;
  */
 @Entity
 public class Cliente extends Usuario {
-
-    @Column(name = "Equipaje")
-    private int equipaje;
-
-    public Cliente() {
-        super();
-    }
-
-    public Cliente(String dni, String nombre, String apellido, String correo, String password, Role role, int equipaje) {
-        super(dni, nombre, apellido, correo, password, role);
-        this.equipaje = equipaje;
-    }
-
-    @Override
-    public String toString() {
-        return "Cliente [DNI = " + dni + "nombre = " + nombre + " " + apellido + ", correo = " + correo + ", contraseña = " + password + "]";
-    }
 
 }

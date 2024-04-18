@@ -12,5 +12,8 @@ import java.util.Optional;
 @Repository
 @Transactional
 public interface RoleRepository extends JpaRepository<Role, Integer> {
+
     Optional<Role> findFirstByDescripcion(String descripcion);
+    int deleteFirstByDescripcion(String descripcion);
+    
 }

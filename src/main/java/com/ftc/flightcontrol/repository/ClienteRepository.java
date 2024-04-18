@@ -5,15 +5,15 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.ftc.flightcontrol.entitys.Clase;
+import com.ftc.flightcontrol.entitys.Cliente;
 
 import jakarta.transaction.Transactional;
 
 @Repository
 @Transactional
-public interface ClaseRepository extends JpaRepository<Clase, Integer> {
+public interface ClienteRepository extends JpaRepository<Cliente, String> {
 
-    Optional<Clase> findFirstByDescripcion(String descripcion);
-    int deleteFirstByDescripcion(String descripcion);
+    Optional<Cliente> findByCorreo(String correo);
+    Optional<Cliente> findByNombre(String userName);
 
 }
