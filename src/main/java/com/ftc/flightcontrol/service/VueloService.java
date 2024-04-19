@@ -8,7 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.ftc.flightcontrol.entitys.Avion;
+import com.ftc.flightcontrol.entitys.Clase;
 import com.ftc.flightcontrol.entitys.Vuelo;
+import com.ftc.flightcontrol.repository.AvionRepository;
+import com.ftc.flightcontrol.repository.ClaseRepository;
 import com.ftc.flightcontrol.repository.VueloRepository;
 import com.ftc.flightcontrol.utils.Mensaje;
 
@@ -20,6 +24,11 @@ public class VueloService {
 
     @Autowired
     private VueloRepository repo;
+    @Autowired
+    private ClaseRepository claseRepo;
+    @Autowired
+    private AvionRepository avionRepo;
+
     private String line = "El vuelo con ID: ";
     private String noExist = " no existe.";
 
@@ -49,6 +58,8 @@ public class VueloService {
     public ResponseEntity<?> readAll() {
         List<Vuelo> lista = repo.findAll();
         if (!lista.isEmpty()) {
+
+
             return new ResponseEntity<>(lista, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(new Mensaje("No hay ningun vuelo en la base de datos."), HttpStatus.NOT_FOUND);
@@ -92,6 +103,38 @@ public class VueloService {
         }
     }
 
+    public ResponseEntity<Mensaje> updateClase(String id, String descripcion) {
+        Optional<Vuelo> update = repo.findById(id);
+        if (update.isPresent()) {
+            Clase clase = claseRepo.findFirstByDescripcion(descripcion).orElse(null);
+            if (clase != null) {
+                update.get().setClase(clase);
+            } else {
+                return new ResponseEntity<>(new Mensaje("La clase: " + descripcion + " no existe"), HttpStatus.NOT_ACCEPTABLE);
+            }
+            repo.save(update.get());
+            return new ResponseEntity<>(new Mensaje("Se ha actualizado el vuelo con ID: " + id), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(new Mensaje(line + id + noExist), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    public ResponseEntity<Mensaje> updateAvion(String id, String matricula) {
+        Optional<Vuelo> update = repo.findById(id);
+        if (update.isPresent()) {
+            Avion avion = avionRepo.findById(matricula).orElse(null);
+            if (avion != null) {
+                update.get().setAvion(avion);
+            } else {
+                return new ResponseEntity<>(new Mensaje("El avion con matricula: " + matricula + " no existe"), HttpStatus.NOT_ACCEPTABLE);
+            }
+            repo.save(update.get());
+            return new ResponseEntity<>(new Mensaje("Se ha actualizado el vuelo con ID: " + id), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(new Mensaje(line + id + noExist), HttpStatus.NOT_FOUND);
+        }
+    }
+
     /**
      * Metodo para eliminar un registro dentro de la BBDD a travez de su ID.
      * 
@@ -107,5 +150,6 @@ public class VueloService {
             return new ResponseEntity<>(new Mensaje(line + id + noExist), HttpStatus.NOT_FOUND);
         }
     }
+
 
 }

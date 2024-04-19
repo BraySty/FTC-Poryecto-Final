@@ -74,10 +74,10 @@ public class PilotoService {
         if (update.isPresent()) {
             Role role = roleRepo.findFirstByDescripcion(rol).orElse(null);
             if (role != null) {
-                return new ResponseEntity<>(new Mensaje("El rol: " + rol + " no existe"), HttpStatus.NOT_ACCEPTABLE);
-            } else {
                 roleRepo.save(new Role(rol));
                 update.get().setRole(role);
+            } else {
+                return new ResponseEntity<>(new Mensaje("El rol: " + rol + " no existe"), HttpStatus.NOT_ACCEPTABLE);
             }
             repo.save(update.get());
             return new ResponseEntity<>(new Mensaje("El piloto fue actualizado."), HttpStatus.OK);

@@ -72,6 +72,11 @@ public class UsuarioController {
 		return service.update(usuario);
 	}
 
+	@PutMapping(BASE_URL + "/{dni}/{rol}")
+	ResponseEntity<Mensaje> setRole(@PathVariable("dni") String dni, @PathVariable("rol") String rol) {
+		return service.updateRole(dni, rol);
+	}
+
 	/**
 	 * Metodo endpoint PUT que eliminar un registro especifico.
 	 * 

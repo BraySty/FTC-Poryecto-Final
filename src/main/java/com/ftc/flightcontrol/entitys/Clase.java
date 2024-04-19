@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ftc.flightcontrol.serializer.ClaseSerializer;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,6 +29,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "Clase", catalog = "flightcontrol")
+@JsonSerialize(using = ClaseSerializer.class)
 public class Clase implements Serializable {
 
     @Id

@@ -71,6 +71,17 @@ public class VueloController {
         return service.updateById(vuelo);
     }
 
+    @PutMapping(BASE_URL + "/clase/{id}/{descripcion}")
+	ResponseEntity<Mensaje> setClase(@PathVariable("id") String id, @PathVariable("descripcion") String descripcion) {
+		return service.updateClase(id, descripcion);
+	}
+
+    @PutMapping(BASE_URL + "/avion/{id}/{matricula}")
+	ResponseEntity<Mensaje> setAvion(@PathVariable("id") String id, @PathVariable("matricula") String matricula) {
+		return service.updateAvion(id, matricula);
+	}
+
+
     /**
      * Metodo endpoint PUT que eliminar un registro especifico.
      * 

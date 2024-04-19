@@ -1,6 +1,8 @@
 package com.ftc.flightcontrol.entitys.usuarios;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -11,7 +13,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.ftc.flightcontrol.entitys.Role;
 import com.ftc.flightcontrol.entitys.VueloPersona;
-import com.ftc.flightcontrol.utils.UsuarioRolSerializer;
+import com.ftc.flightcontrol.serializer.RolSerializer;
+import com.ftc.flightcontrol.serializer.UsuarioSerializer;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -28,6 +31,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,8 +39,7 @@ import lombok.Setter;
 /**
  * Esta clase es la super clase para las demas clases que heredan de esta.
  */
-@Getter
-@Setter
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -44,7 +47,10 @@ import lombok.Setter;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING)
+@JsonSerialize(using = UsuarioSerializer.class)
 public class Usuario implements UserDetails {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name = "DNI", length = 255, unique = true)
@@ -59,11 +65,12 @@ public class Usuario implements UserDetails {
     protected String password;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "roles_id", referencedColumnName = "id")
-    @JsonSerialize(using = UsuarioRolSerializer.class)
+    @JsonSerialize(using = RolSerializer.class)
     protected Role role;
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnore
-    private Collection<VueloPersona> vueloPersona;
+    @Builder.Default
+    private Set<VueloPersona> vueloPersonas = new HashSet<VueloPersona>(0);
 
     @JsonIgnore
     @Override

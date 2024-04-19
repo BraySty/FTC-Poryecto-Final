@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ftc.flightcontrol.entitys.Role;
 import com.ftc.flightcontrol.entitys.usuarios.Usuario;
+import com.ftc.flightcontrol.repository.RoleRepository;
 import com.ftc.flightcontrol.repository.UsuarioRepository;
 import com.ftc.flightcontrol.utils.Mensaje;
 
@@ -21,6 +23,8 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository repo;
+	@Autowired
+    private RoleRepository roleRepo;
 
 	private final PasswordEncoder passwordEncoder;
 	private String userEmailMsg = "El usuario con correo: ";
@@ -98,6 +102,23 @@ public class UsuarioService {
 					HttpStatus.NOT_FOUND);
 		}
 	}
+
+	public ResponseEntity<Mensaje> updateRole(String dni, String rol) {
+        Optional<Usuario> update = repo.findById(dni);
+        if (update.isPresent()) {
+            Role role = roleRepo.findFirstByDescripcion(rol).orElse(null);
+            if (role != null) {
+				roleRepo.save(new Role(rol));
+                update.get().setRole(role);
+            } else {
+                return new ResponseEntity<>(new Mensaje("El rol: " + rol + " no existe"), HttpStatus.NOT_ACCEPTABLE);
+            }
+            repo.save(update.get());
+            return new ResponseEntity<>(new Mensaje("El usuario fue actualizado."), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(new Mensaje(userEmailMsg + dni + " no existe."), HttpStatus.NOT_FOUND);
+        }
+    }
 
 	/**
 	 * Metodo para eliminar un registro dentro de la BBDD a travez de su ID.

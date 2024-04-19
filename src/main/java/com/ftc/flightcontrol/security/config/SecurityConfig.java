@@ -33,8 +33,10 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/api/v1/users/**").permitAll()
                 .requestMatchers("/api/v1/vuelos/**").permitAll()
-                .requestMatchers("/api/v1/piloto/**").hasAuthority("Admin")
-                .anyRequest().authenticated())
+                .requestMatchers("/api/v1/clases/**").permitAll()
+                .requestMatchers("/api/v1/aviones/**").permitAll()
+                .requestMatchers("/api/v1/pilotos/**").permitAll()//hasAuthority("Admin").anyRequest().authenticated()
+                )
                 .sessionManagement(
                         sessionManager -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)

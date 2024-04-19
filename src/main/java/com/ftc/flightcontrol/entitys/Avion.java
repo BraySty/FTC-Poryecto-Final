@@ -4,12 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ftc.flightcontrol.serializer.AvionSerializer;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +27,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "Avion", catalog = "flightcontrol")
+@JsonSerialize(using = AvionSerializer.class)
 public class Avion implements Serializable {
 
     @Id
@@ -34,7 +37,7 @@ public class Avion implements Serializable {
     private int capacidad;
     @Column(name = "Carga")
     private int carga;
-    @ManyToMany(mappedBy = "avion", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "avion", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Vuelo> vuelo;
 

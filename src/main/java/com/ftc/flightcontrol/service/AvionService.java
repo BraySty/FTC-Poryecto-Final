@@ -53,7 +53,7 @@ public class AvionService {
                return new ResponseEntity<>(lista, HttpStatus.OK);
           } else {
                return new ResponseEntity<>(new Mensaje("No hay ningun avion en la base de datos."),
-                         HttpStatus.NO_CONTENT);
+                         HttpStatus.NOT_FOUND);
           }
      }
 
