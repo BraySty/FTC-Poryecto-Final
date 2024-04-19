@@ -9,9 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ftc.flightcontrol.entitys.Mensaje;
-import com.ftc.flightcontrol.entitys.Role;
 import com.ftc.flightcontrol.entitys.Usuario;
-import com.ftc.flightcontrol.repository.RoleRepository;
 import com.ftc.flightcontrol.repository.UsuarioRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,8 +20,6 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository repo;
-	@Autowired
-	private RoleRepository roleRepo;
 
 	private String userEmailMsg = "El usuario con correo: ";
 
@@ -40,13 +36,7 @@ public class UsuarioService {
 			return new ResponseEntity<>(new Mensaje(userEmailMsg + correo + " ya existe"),
 					HttpStatus.CONFLICT);
 		} else {
-			Role role = roleRepo.findFirstByDescripcion("Cliente").orElse(null);
-			if (role != null) {
-				usuario.setRole(role);
-			} else {
-				roleRepo.save(new Role("Cliente"));
-				usuario.setRole(role);
-			}
+			
 			repo.save(usuario);
 			return new ResponseEntity<>(new Mensaje(userEmailMsg + correo + " ha sido creado"), HttpStatus.CREATED);
 		}

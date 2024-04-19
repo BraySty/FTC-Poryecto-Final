@@ -7,6 +7,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -17,6 +19,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -48,33 +51,39 @@ public class Usuario implements UserDetails {
     protected String correo;
     @Column(name = "Password", length = 255)
     protected String password;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "roles_id", referencedColumnName = "id")
-    @JsonManagedReference
     protected Role role;
     @OneToMany(mappedBy = "usuario")
+    @JsonIgnore
     private Collection<VueloPersona> vueloPersona;
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
       return List.of(new SimpleGrantedAuthority((role.getDescripcion())));
     }
+    @JsonIgnore
     @Override
     public String getUsername() {
         return this.nombre;
     }
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
        return true;
     }
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
        return true;
     }
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;
