@@ -9,6 +9,8 @@ import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.ftc.flightcontrol.entitys.Usuario;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -25,7 +27,7 @@ public class JwtService {
      * @param user UserDetails del ususario.
      * @return Regresa el token como String.
      */
-    public String getToken(UserDetails user) {
+    public String getToken(Usuario user) {
         return getToken(new HashMap<>(), user);
     }
 
@@ -35,9 +37,12 @@ public class JwtService {
      * @param user UserDetails del ususario.
      * @return Regresa el token como String.
      */
-    private String getToken(Map<String,Object> extraClaims, UserDetails user) {
-        extraClaims.put("role", user.getAuthorities());
-        extraClaims.put("username", user.getUsername());
+    private String getToken(Map<String,Object> extraClaims, Usuario user) {
+        extraClaims.put("dni", user.getDni());
+        extraClaims.put("nombre", user.getUsername());
+        extraClaims.put("apellidos", user.getApellido());
+        extraClaims.put("correo", user.getCorreo());
+        extraClaims.put("authority", user.getAuthorities());
         return Jwts
             .builder()
             .setClaims(extraClaims)

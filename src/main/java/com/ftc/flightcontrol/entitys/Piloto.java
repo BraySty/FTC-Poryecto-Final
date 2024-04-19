@@ -1,5 +1,6 @@
 package com.ftc.flightcontrol.entitys;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@DiscriminatorValue("Piloto")
 public class Piloto extends Usuario{
 
     private int horasVuelo;

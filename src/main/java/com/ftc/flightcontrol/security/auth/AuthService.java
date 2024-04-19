@@ -30,7 +30,7 @@ public class AuthService {
 
     public AuthResponse login(LoginRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUserName(), request.getPassword()));
-        UserDetails user = repo.findByNombre(request.getUserName()).orElseThrow();
+        Usuario user = repo.findByNombre(request.getUserName()).orElseThrow();
         String token = jwtService.getToken(user);
         return AuthResponse.builder()
             .token(token)
@@ -39,10 +39,10 @@ public class AuthService {
     }
 
     public AuthResponse register(RegisterRequest request) {
-        Usuario user = (Usuario) Usuario.builder()
-            .dni("null")
+        Usuario user = Usuario.builder()
+            .dni(request.getDni())
             .nombre(request.getUserName())
-            .apellido("null")
+            .apellido(request.getApellido())
             .correo(request.getCorreo())
             .password(passwordEncoder.encode( request.getPassword()))
             .role(new Role(1, "Cliente", null))

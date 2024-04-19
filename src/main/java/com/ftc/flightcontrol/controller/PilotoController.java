@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftc.flightcontrol.entitys.Mensaje;
-import com.ftc.flightcontrol.entitys.Usuario;
-import com.ftc.flightcontrol.service.UsuarioService;
+import com.ftc.flightcontrol.entitys.Piloto;
+import com.ftc.flightcontrol.service.PilotoService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,20 +21,20 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @CrossOrigin(origins = { "http://localhost:4200" })
-public class UsuarioController {
+public class PilotoController {
 
-	private final UsuarioService service;
-	private static final String BASE_URL = "/users";
+	private final PilotoService service;
+	private static final String BASE_URL = "/pilotos";
 
 	/**
 	 * Metodo endpoint POST que recibe datos y los guarda en la BBDD
 	 * 
-	 * @param usuario La clase con los datos que se busca guardar.
+	 * @param piloto La clase con los datos que se busca guardar.
 	 * @return Mensaje con el estado de la operacion.
 	 */
 	@PostMapping(BASE_URL)
-	ResponseEntity<Mensaje> create(@RequestBody Usuario usuario) {
-		return service.save(usuario);
+	ResponseEntity<Mensaje> create(@RequestBody Piloto piloto) {
+		return service.save(piloto);
 	}
 
 	/**
@@ -53,34 +53,39 @@ public class UsuarioController {
 	/**
 	 * Metodo endpoint GET que regresa un registro especifico de una tabla.
 	 * 
-	 * @param correoUsuario String con el ID del registro a buscar.
+	 * @param dni String con el ID del registro a buscar.
 	 * @return ResponseEntity<> con el estado de la operacion.
 	 */
-	@GetMapping(BASE_URL + "/{correo}")
-	ResponseEntity<?> read(@PathVariable("correo") String correoUsuario) {
-		return service.read(correoUsuario);
+	@GetMapping(BASE_URL + "/{dni}")
+	ResponseEntity<?> read(@PathVariable("dni") String dni) {
+		return service.read();
 	}
 
 	/**
 	 * Metodo endpoint PUT que recibe datos y actualiza un registro especifico.
 	 * 
-	 * @param usuario Los datos del registro a actualizar
+	 * @param piloto Los datos del registro a actualizar
 	 * @return ResponseEntity<> con el estado de la operacion.
 	 */
 	@PutMapping(BASE_URL)
-	ResponseEntity<Mensaje> update(@RequestBody Usuario usuario) {
-		return service.update(usuario);
+	ResponseEntity<Mensaje> update(@RequestBody Piloto piloto) {
+		return service.update(piloto);
+	}
+
+	@PutMapping(BASE_URL + "/{dni}/{rol}")
+	ResponseEntity<Mensaje> setRole(@PathVariable("dni") String dni, @PathVariable("rol") String rol) {
+		return service.updateRole(dni, rol);
 	}
 
 	/**
 	 * Metodo endpoint PUT que eliminar un registro especifico.
 	 * 
-	 * @param correoUsuario String con el ID del registro a eliminar.
+	 * @param dni String con el ID del registro a eliminar.
 	 * @return ResponseEntity<> con el estado de la operacion.
 	 */
-	@DeleteMapping(BASE_URL + "/{correo}")
-	ResponseEntity<Mensaje> delete(@PathVariable("correo") String correoUsuario) {
-		return service.delete(correoUsuario);
+	@DeleteMapping(BASE_URL + "/{dni}")
+	ResponseEntity<Mensaje> delete(@PathVariable("dni") String dni) {
+		return service.delete(dni);
 	}
 
 }
