@@ -9,9 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.ftc.flightcontrol.entitys.Mensaje;
-import com.ftc.flightcontrol.entitys.Usuario;
+import com.ftc.flightcontrol.entitys.usuarios.Usuario;
 import com.ftc.flightcontrol.repository.UsuarioRepository;
+import com.ftc.flightcontrol.utils.Mensaje;
 
 import lombok.RequiredArgsConstructor;
 

@@ -9,11 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.ftc.flightcontrol.entitys.Mensaje;
-import com.ftc.flightcontrol.entitys.Piloto;
 import com.ftc.flightcontrol.entitys.Role;
+import com.ftc.flightcontrol.entitys.usuarios.Piloto;
 import com.ftc.flightcontrol.repository.PilotoRepository;
 import com.ftc.flightcontrol.repository.RoleRepository;
+import com.ftc.flightcontrol.utils.Mensaje;
 
 import lombok.RequiredArgsConstructor;
 

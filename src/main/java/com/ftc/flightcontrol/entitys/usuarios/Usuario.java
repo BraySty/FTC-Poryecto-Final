@@ -1,4 +1,4 @@
-package com.ftc.flightcontrol.entitys;
+package com.ftc.flightcontrol.entitys.usuarios;
 
 import java.util.Collection;
 import java.util.List;
@@ -8,6 +8,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ftc.flightcontrol.entitys.Role;
+import com.ftc.flightcontrol.entitys.VueloPersona;
+import com.ftc.flightcontrol.utils.UsuarioRolSerializer;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -55,8 +59,9 @@ public class Usuario implements UserDetails {
     protected String password;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "roles_id", referencedColumnName = "id")
+    @JsonSerialize(using = UsuarioRolSerializer.class)
     protected Role role;
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnore
     private Collection<VueloPersona> vueloPersona;
 

@@ -1,4 +1,4 @@
-package com.ftc.flightcontrol.entitys;
+package com.ftc.flightcontrol.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

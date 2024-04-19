@@ -9,7 +9,7 @@ import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.ftc.flightcontrol.entitys.Usuario;
+import com.ftc.flightcontrol.entitys.usuarios.Usuario;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

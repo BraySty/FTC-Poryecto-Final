@@ -9,8 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ftc.flightcontrol.entitys.Avion;
-import com.ftc.flightcontrol.entitys.Mensaje;
 import com.ftc.flightcontrol.repository.AvionRepository;
+import com.ftc.flightcontrol.utils.Mensaje;
 
 import lombok.RequiredArgsConstructor;
 

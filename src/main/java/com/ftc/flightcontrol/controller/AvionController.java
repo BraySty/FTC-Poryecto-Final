@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftc.flightcontrol.entitys.Avion;
-import com.ftc.flightcontrol.entitys.Mensaje;
 import com.ftc.flightcontrol.service.AvionService;
+import com.ftc.flightcontrol.utils.Mensaje;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;

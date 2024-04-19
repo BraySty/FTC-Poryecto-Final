@@ -7,7 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ftc.flightcontrol.entitys.Role;
-import com.ftc.flightcontrol.entitys.Usuario;
+import com.ftc.flightcontrol.entitys.usuarios.Usuario;
 import com.ftc.flightcontrol.repository.UsuarioRepository;
 import com.ftc.flightcontrol.security.service.JwtService;
 import com.ftc.flightcontrol.security.entitys.AuthResponse;

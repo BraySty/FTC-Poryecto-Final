@@ -2,10 +2,11 @@ package com.ftc.flightcontrol.entitys;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.ftc.flightcontrol.entitys.usuarios.Usuario;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -30,14 +31,14 @@ import lombok.NoArgsConstructor;
 public class VueloPersona implements Serializable{
 
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Vuelo_ID")
     private Vuelo vuelo;
     @Column(name = "Precio")
     private Double precio;
     @Column(name = "Carga")
     private int carga;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Persona_DNI")
     private Usuario usuario;
 

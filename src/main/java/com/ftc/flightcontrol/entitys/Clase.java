@@ -3,8 +3,11 @@ package com.ftc.flightcontrol.entitys;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,7 +35,8 @@ public class Clase implements Serializable {
     private int id;
     @Column(name = "Descripcion", unique = true, length = 255)
     private String descripcion;
-    @OneToMany(mappedBy = "clase")
+    @OneToMany(mappedBy = "clase", fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Vuelo> vuelo;
 
     public Clase(String descripcion) {

@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ftc.flightcontrol.entitys.Mensaje;
-import com.ftc.flightcontrol.entitys.Piloto;
+import com.ftc.flightcontrol.entitys.usuarios.Piloto;
 import com.ftc.flightcontrol.service.PilotoService;
+import com.ftc.flightcontrol.utils.Mensaje;
 
 import lombok.RequiredArgsConstructor;
 

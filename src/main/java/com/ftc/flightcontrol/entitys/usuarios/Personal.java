@@ -1,4 +1,4 @@
-package com.ftc.flightcontrol.entitys;
+package com.ftc.flightcontrol.entitys.usuarios;
 
 public class Personal extends Usuario{
 

@@ -1,4 +1,4 @@
-package com.ftc.flightcontrol.entitys;
+package com.ftc.flightcontrol.entitys.usuarios;
 
 import jakarta.persistence.Entity;
 

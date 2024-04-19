@@ -32,6 +32,7 @@ public class SecurityConfig {
                 .requestMatchers("/doc/swagger-ui/**").permitAll()
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/api/v1/users/**").permitAll()
+                .requestMatchers("/api/v1/vuelos/**").permitAll()
                 .requestMatchers("/api/v1/piloto/**").hasAuthority("Admin")
                 .anyRequest().authenticated())
                 .sessionManagement(
